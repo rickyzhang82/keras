@@ -1,14 +1,14 @@
 help:
 	@cat Makefile
 
-DATA?="${HOME}/Data"
+DATA?="${HOME}/keras-data"
 DOCKER_FILE=Dockerfile
 BACKEND=tensorflow
 PYTHON_VERSION?=3.6
 CUDA_VERSION?=9.0
 CUDNN_VERSION?=7
 TEST=tests/
-SRC?=$(shell dirname `pwd`)
+SRC?="${HOME}/keras-workspace"
 
 build:
 	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
