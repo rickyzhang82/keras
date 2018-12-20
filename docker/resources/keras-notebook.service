@@ -1,0 +1,18 @@
+# /usr/lib/systemd/system/keras-notebook.service
+[Unit]
+Description=Keras Notebook
+Requires=docker.service
+After=docker.service
+
+[Service]
+User=Ricky
+Group=Ricky
+Restart=always
+ExecStartPre=-/usr/bin/docker kill keras-notebook
+ExecStartPre=-/usr/bin/docker rm -f keras-notebook
+ExecStart=/usr/bin/docker run --name=keras-notebook --runtime=nvidia -v /home/Ricky/keras-workspace:/src/workspace -v /home/Ricky/keras-data:/data --net=host --env KERAS_BACKEND=tensorflow keras
+ExecStop=/usr/bin/docker stop -t 2 keras-notebook
+ExecStopPost=/usr/bin/docker rm -f keras-notebook
+
+[Install]
+WantedBy=multi-user.target
